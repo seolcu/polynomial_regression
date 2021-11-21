@@ -61,8 +61,31 @@ for i in range(-99, 101, 2):
 predict_x_data = np.array(predict_x_data)
 predict_y_data = np.array(predict_y_data)
 
+
+# 예측한 모델의 도함수
+def predict_der_f(x):
+    # 0에 가까운 값
+    delta_x = 1e-4
+    # 도함수의 정의 사용 ( lim:h->0 에서 (f(x+h)-f(x))/h )
+    return float(model.predict([x + delta_x]) - model.predict([x]))/delta_x
+
+
+# 도함수 비교를 위한 빈 배열 생성
+der_x_data = []
+der_y_data = []
+der_predict_y_data = []
+for i in range(-100, 101, 1):
+    der_x_data.append(i)
+    der_y_data.append(der_f(i))
+    der_predict_y_data.append(float(predict_der_f(i)))
+der_x_data = np.array(der_x_data)
+der_y_data = np.array(der_y_data)
+der_predict_y_data = np.array(der_predict_y_data)
+
+
+
 # epoch에 대한 오차값 그래프
-plt.subplot(211)
+plt.subplot(221)
 plt.plot(history.history["loss"])
 plt.title("Model accuracy")
 plt.xlabel("Epoch")
@@ -70,7 +93,12 @@ plt.ylabel("Accuracy")
 plt.legend(["Accuracy", "Loss"], loc="upper left")
 
 # 함수 그래프
-plt.subplot(212)
+plt.subplot(222)
 plt.plot(x_data, y_data, color="red")
 plt.plot(predict_x_data, predict_y_data, color="blue")
+
+# 도함수 그래프
+plt.subplot(223)
+plt.plot(der_x_data, der_y_data, color="red")
+plt.plot(der_x_data, der_predict_y_data, color="blue")
 plt.savefig("results.png")
