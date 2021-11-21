@@ -50,16 +50,18 @@ model.compile(loss="mse", optimizer=adam, metrics=["accuracy"])
 # 모델 학습시키고 history 에 저장
 history = model.fit(x_data, y_data, epochs=500, batch_size=1, shuffle=False, verbose=1)
 
+# 빈 테스트 데이터 어레이 생성
 predict_x_data = []
 predict_y_data = []
 for i in range(-99, 101, 2):
+    # 반복문으로 -99부터 99까지 홀수인 x값에 대한 데이터 예측
     predict_x_data.append(i)
+    # float: 실수화
     predict_y_data.append(float(model.predict([i])))
 predict_x_data = np.array(predict_x_data)
 predict_y_data = np.array(predict_y_data)
 
-model.summary()
-
+# epoch에 대한 오차값 그래프
 plt.subplot(211)
 plt.plot(history.history["loss"])
 plt.title("Model accuracy")
@@ -67,6 +69,7 @@ plt.xlabel("Epoch")
 plt.ylabel("Accuracy")
 plt.legend(["Accuracy", "Loss"], loc="upper left")
 
+# 함수 그래프
 plt.subplot(212)
 plt.plot(x_data, y_data, color="red")
 plt.plot(predict_x_data, predict_y_data, color="blue")
