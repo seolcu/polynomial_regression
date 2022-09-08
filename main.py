@@ -49,8 +49,8 @@ def der_f(x):
 # 학습 데이터 만들기
 train_x_data = []
 train_y_data = []
-for i in range(500):
-    # -50부터 50 사이의 x값에 대한 데이터 500개
+for i in range(50):
+    # -50부터 50 사이의 x값에 대한 데이터 50개
     random_int = random.randint(-50, 50)
     train_x_data.append(random_int)
     train_y_data.append(f(random_int))
@@ -70,7 +70,7 @@ model.compile(loss="mse", optimizer=adam)
 
 # 모델 학습시키고 history 에 저장
 history = model.fit(
-    train_x_data, train_y_data, epochs=100, batch_size=1, shuffle=False, verbose=1
+    train_x_data, train_y_data, epochs=300, batch_size=1, shuffle=False, verbose=1
 )
 
 
